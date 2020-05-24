@@ -77,10 +77,6 @@ trait RevisionableTrait
             $model->postSave();
         });
 
-        static::created(function ($model) {
-            $model->postCreate();
-        });
-
         static::deleted(function ($model) {
             $model->preSave();
             $model->postDelete();
@@ -178,7 +174,7 @@ trait RevisionableTrait
         }
 
         // check if the model already exists
-        if (((!isset($this->revisionEnabled) || $this->revisionEnabled) && $this->updating) && (!$LimitReached || $RevisionCleanup)) {
+        if (((!isset($this->revisionEnabled) || $this->revisionEnabled)) && (!$LimitReached || $RevisionCleanup)) {
             // if it does, it means we're updating
 
             $changes_to_record = $this->changedRevisionableFields();
